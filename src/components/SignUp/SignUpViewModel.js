@@ -1,16 +1,47 @@
 import InputValidator from "../Validator/InputValidator";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import db from '../Database/Database';
+import { doc, setDoc } from "firebase/firestore";
 
 class SignUpViewModel {
-    validateSignUp(firstName, lastName, email, password) {
-        const result = InputValidator.validateSignUp(firstName, lastName, email, password);
 
-        if (result.valid) {
-            // crear cuenta
-        } else {
-            // mostrar error
+    async createUserInDatabase(firstName, lastName, email) {
+        try {
+        const auth = getAuth(); 
+        const userId = auth.currentUser?.uid;
+        if (!userId) {
+            throw new Error("Ocurrió un error al obtener la sesión");
         }
+        const userDocRef = doc(db, "users", userId);
+        await setDoc(userDocRef, {
+            id: userId,
+            email: email,
+            profile_picture: "",
+            province_id: "",
+            neighbourhood: "",
+            last_name: lastName,
+            first_name: firstName,
+            description: ""
+        });
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    }
 
-        return result;
+    async createUserWithCredentials(firstName, lastName, email, password) {
+        const auth = getAuth();
+        try {
+            await createUserWithEmailAndPassword(auth, email, password);
+            await this.createUserInDatabase(firstName, lastName, email);
+            return { valid: true };
+        } catch (error) {
+            return { valid: false, message: error.message };
+        }
+    }
+
+    validateSignUp(firstName, lastName, email, password) {
+        return InputValidator.validateSignUp(firstName, lastName, email, password);
     }
 }
 

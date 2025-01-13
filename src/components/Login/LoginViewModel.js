@@ -1,16 +1,20 @@
 import InputValidator from "../Validator/InputValidator";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 class LoginViewModel {
-    validateLogin(email, password) {
-        const result = InputValidator.validateLogin(email, password);
 
-        if (result.valid) {
-            // iniciar sesion
-        } else {
-            // mostrar error
+    async loginWithCredentials(email, password) {
+        const auth = getAuth();
+        try {
+            await signInWithEmailAndPassword(auth, email, password)
+            return { valid: true };
+        } catch (error) {
+            return { valid: false, message: error.message };
         }
+    }
 
-        return result;
+    validateLogin(email, password) {
+        return InputValidator.validateLogin(email, password);
     }
 }
 

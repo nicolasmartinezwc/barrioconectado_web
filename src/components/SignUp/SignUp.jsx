@@ -12,7 +12,8 @@ class SignUp extends React.Component {
             password: '',
             showPassword: false,
             passwordInputType: "password",
-            errorMessage: ''
+            errorMessage: '',
+            disableButton: false
         };
 
         this.viewModel = new SignUpViewModel();
@@ -62,15 +63,25 @@ class SignUp extends React.Component {
         return validationResult.valid
     };
 
-    handleSignUpButton = () => {
+    handleSignUpButton = async () => {
         this.setState({ errorMessage: '' });
+        this.setState({ disableButton: true });
         if (this.isSignUpValid()) {
-            console.log("should sign up");
+            let result = await this.viewModel.createUserWithCredentials(
+                this.state.firstName,
+                this.state.lastName,
+                this.state.email,
+                this.state.password
+            )
+            if (!result.valid) {
+                this.setState({ errorMessage: result.message });
+            }
         }
+        this.setState({ disableButton: false });
     };
 
     render() {
-        const { firstName, lastName, email, password, showPassword, passwordInputType, errorMessage } = this.state;
+        const { firstName, lastName, email, password, showPassword, passwordInputType, errorMessage, disableButton } = this.state;
 
         return (
             <div className="sign-up-container">
@@ -136,7 +147,11 @@ class SignUp extends React.Component {
                     </div>
                     <span id="error-message-span">{errorMessage}</span>
                     <button
+                        disabled={disableButton}
                         className="login-button"
+                        style={{
+                            backgroundColor: this.state.disableButton ? '#f5f5f5' : '#49a0ff'
+                        }}
                         onClick={this.handleSignUpButton}
                     >
                         <span>Finalizar</span>

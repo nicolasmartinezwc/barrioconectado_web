@@ -7,7 +7,8 @@ class RecoverPassword extends React.Component {
         super(props);
         this.state = {
             email: '',
-            errorMessage: ''
+            errorMessage: '',
+            successMessage: ''
         };
 
         this.viewModel = new RecoverPasswordViewModel();
@@ -23,23 +24,27 @@ class RecoverPassword extends React.Component {
 
     isEmailValid = () => {
         const validationResult = this.viewModel.validateRecoverPassword(this.state.email);
-
         if (!validationResult.valid) {
             this.setState({ errorMessage: validationResult.message });
         }
-
         return validationResult.valid
     };
 
-    handleRecoverPasswordButton = () => {
+    handleRecoverPasswordButton = async () => {
         this.setState({ errorMessage: '' });
+        this.setState({ successMessage: '' });
         if (this.isEmailValid()) {
-            console.log("should send email");
+            const result = await this.viewModel.sendPasswordResetEmail(this.state.email);
+            if (result.valid) {
+                this.setState({ successMessage: result.message });
+            } else {
+                this.setState({ errorMessage: result.message });
+            }
         }
     };
 
     render() {
-        const { email, errorMessage } = this.state;
+        const { email, errorMessage, successMessage } = this.state;
 
         return (
             <div className="sign-up-container">
@@ -67,6 +72,7 @@ class RecoverPassword extends React.Component {
 
                     </div>
                     <span id="error-message-span">{errorMessage}</span>
+                    <span id="success-message-span">{successMessage}</span>
                     <button
                         className="login-button"
                         onClick={this.handleRecoverPasswordButton}

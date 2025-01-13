@@ -18,7 +18,8 @@ class Login extends React.Component {
       showSignUp: false,
       passwordInputType: "password",
       errorMessage: '',
-      showForgotPassword: false
+      showForgotPassword: false,
+      disableButton: false
     };
 
     this.viewModel = new LoginViewModel();
@@ -70,11 +71,16 @@ class Login extends React.Component {
     return validationResult.valid
   };
 
-  handleLogin = () => {
+  handleLogin = async () => {
+    this.setState({ disableButton: true })
     this.setState({ errorMessage: '' });
     if (this.isLoginValid()) {
-      console.log("should login");
+      let result = await this.viewModel.loginWithCredentials(this.state.email, this.state.password);
+      if (!result.valid) {
+        this.setState({ errorMessage: result.message });
+      }
     }
+    this.setState({ disableButton: false });
   };
 
   handleRecoverPasswordButton = () => {
@@ -86,96 +92,100 @@ class Login extends React.Component {
   };
 
   render() {
-    const { email, password, showPassword, showSignUp, passwordInputType, errorMessage, showForgotPassword } = this.state;
+    const { email, password, showPassword, showSignUp, passwordInputType, errorMessage, showForgotPassword, disableButton } = this.state;
 
     return (
       showSignUp ?
         <SignUp hideSignUp={this.hideSignUp} />
         :
         showForgotPassword ?
-        <RecoverPassword hideRecoverPassword={this.hideRecoverPassword} />
-        :
-        <div className="login-container">
-          <div className="login-content">
-            <h1 className="title">Bienvenido/a a Barrio Conectado</h1>
+          <RecoverPassword hideRecoverPassword={this.hideRecoverPassword} />
+          :
+          <div className="login-container">
+            <div className="login-content">
+              <h1 className="title">Bienvenido/a a Barrio Conectado</h1>
 
-            <img className="logo" src={logo} alt="Logo" />
+              <img className="logo" src={logo} alt="Logo" />
 
-            <div className="card">
+              <div className="card">
 
-              <button className="google-btn" onClick={this.handleLoginWithGoogle}>
-                <img
-                  src={googleLogo}
-                  alt="Google"
-                  className="google-icon"
-                />
-                Continuar con Google
-              </button>
-
-              <div className="line-with-text">
-                <hr />
-                <span>O continua con tu correo</span>
-                <hr />
-              </div>
-
-              <div className="inputs-container">
-                <div className="email-container">
-                  <label>Email</label>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={this.handleEmailChange}
-                    className="textfield"
+                <button className="google-btn" onClick={this.handleLoginWithGoogle}>
+                  <img
+                    src={googleLogo}
+                    alt="Google"
+                    className="google-icon"
                   />
+                  Continuar con Google
+                </button>
+
+                <div className="line-with-text">
+                  <hr />
+                  <span>O continua con tu correo</span>
+                  <hr />
                 </div>
 
-                <div className="password-container">
-                  <div className="password-labels-container">
-                    <label>Contraseña</label>
-                    <button
-                      className="show-password-button"
-                      onClick={this.handleShowPassword}
-                    >
-                      {showPassword ? "Ocultar" : "Mostrar"}
-                    </button>
+                <div className="inputs-container">
+                  <div className="email-container">
+                    <label>Email</label>
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={this.handleEmailChange}
+                      className="textfield"
+                    />
                   </div>
-                  <input
-                    type={passwordInputType}
-                    value={password}
-                    onChange={this.handlePasswordChange}
-                    className="textfield"
-                    id="password-textfield"
-                  />
+
+                  <div className="password-container">
+                    <div className="password-labels-container">
+                      <label>Contraseña</label>
+                      <button
+                        className="show-password-button"
+                        onClick={this.handleShowPassword}
+                      >
+                        {showPassword ? "Ocultar" : "Mostrar"}
+                      </button>
+                    </div>
+                    <input
+                      type={passwordInputType}
+                      value={password}
+                      onChange={this.handlePasswordChange}
+                      className="textfield"
+                      id="password-textfield"
+                    />
+                  </div>
                 </div>
+
+                <button
+                  className="recover-password-button"
+                  onClick={this.handleRecoverPasswordButton}
+                >
+                  ¿Olvidaste tu contraseña?
+                </button>
+
+                <span id="error-message-span">{errorMessage}</span>
+
+                <button
+                  disabled={disableButton}
+                  style={{
+                    backgroundColor: this.state.disableButton ? '#f5f5f5' : '#49a0ff'
+                  }}
+                  className="login-button"
+                  onClick={this.handleLogin}
+                >
+                  Iniciar sesión
+                </button>
+
+                <button
+                  className="create-account-button"
+                  onClick={this.handleCreateAccountButton}
+                >
+                  <span>¿Todavía no tenes una cuenta?</span>
+                  <span className="create-account-span">Crea una.</span>
+                </button>
+
               </div>
-
-              <button 
-              className="recover-password-button"
-              onClick={this.handleRecoverPasswordButton}
-              >
-                ¿Olvidaste tu contraseña?
-              </button>
-
-              <span id="error-message-span">{errorMessage}</span>
-
-              <button
-                className="login-button"
-                onClick={this.handleLogin}
-              >
-                Iniciar sesión
-              </button>
-
-              <button
-                className="create-account-button"
-                onClick={this.handleCreateAccountButton}
-              >
-                <span>¿Todavía no tenes una cuenta?</span>
-                <span className="create-account-span">Crea una.</span>
-              </button>
-
             </div>
           </div>
-        </div>
     );
   }
 }

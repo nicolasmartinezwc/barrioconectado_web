@@ -1,16 +1,21 @@
 import InputValidator from "../Validator/InputValidator";
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
 class RecoverPasswordViewModel {
-    validateRecoverPassword(email) {
-        const result = InputValidator.validateRecoverPassword(email);
 
-        if (result.valid) {
-            // enviar email de recuperacion
-        } else {
-            // mostrar error
+    async sendPasswordResetEmail(email) {
+        const auth = getAuth();
+    
+        try {
+            await sendPasswordResetEmail(auth, email);
+            return { valid: true, message: "Se envió correctamente el correo de recuperación de contraseña." };
+        } catch (error) {
+            return { valid: false, message: error.message };
         }
+    }
 
-        return result;
+    validateRecoverPassword(email) {
+        return InputValidator.validateRecoverPassword(email);
     }
 }
 
