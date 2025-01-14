@@ -1,6 +1,4 @@
 import React from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebaseConfig";
 import './Login.css';
 import logo from '../../assets/logo.png';
 import googleLogo from '../../assets/google_logo.png';
@@ -12,7 +10,7 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: 'test@test.com',
+      email: 'ricardogomez@mail.com',
       password: '123456',
       showPassword: false,
       showSignUp: false,

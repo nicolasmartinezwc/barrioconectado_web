@@ -1,0 +1,21 @@
+.empty-content p {
+    min-height: 100vh;
+    font-size: 24px;
+    text-align: center;
+    align-content: center;
+  }
+
+  .events-container {
+    justify-self: center;
+    min-width: 80%;
+  }
+  
+  .announcement-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    margin-top: 40px;
+  }
+  
