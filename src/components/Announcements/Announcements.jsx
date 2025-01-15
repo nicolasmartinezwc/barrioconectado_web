@@ -15,7 +15,6 @@ class Announcements extends React.Component {
 
     async componentDidMount() {
         const announcements = await this.viewModel.fetchAnnouncements();
-        console.log(announcements);
         this.setState({ announcements: announcements });
     }
 

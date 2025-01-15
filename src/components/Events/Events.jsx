@@ -1,6 +1,7 @@
 import React from "react";
 import "./Events.css";
 import EventsViewModel from "./EventsViewModel.js";
+import EventCard from "./EventCard.jsx";
 
 class Events extends React.Component {
   constructor(props) {
@@ -13,12 +14,19 @@ class Events extends React.Component {
 
   async componentDidMount() {
     const events = await this.viewModel.fetchEvents();
-    console.log(events);
     this.setState({ events: events });
+  }
+
+  toggleAssistance = async (event) => {
+    const updatedEvents = await this.viewModel.toggleAssistance(this.state.events, event);
+    if (updatedEvents) {
+      this.setState({ events: updatedEvents });
+    }
   }
 
   render() {
     const { events } = this.state;
+
     return (
       events ?
       events.length > 0 ?
@@ -27,6 +35,7 @@ class Events extends React.Component {
                     <div key={index}>
                         <EventCard 
                           event={event}
+                          toggleAssistance={this.toggleAssistance}
                           userId={this.props.userData.id}
                         />
                     </div>
