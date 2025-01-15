@@ -49,6 +49,79 @@ class InputValidator {
         return { valid: true };
     }
 
+    static validateAnnouncementForm(title, description, phoneNumber, usePhoneNumber) {
+        const titleValidation = this.validateAnnouncementTitle(title);
+        const descriptionValidation = this.validateAnnouncementDescription(description);
+        const phoneNumberValidation = this.validateAnnouncementPhoneNumber(phoneNumber, usePhoneNumber);
+
+        if (!titleValidation.valid) {
+            return titleValidation;
+        }
+
+        if (!descriptionValidation.valid) {
+            return descriptionValidation;
+        }
+
+        if (!phoneNumberValidation.valid) {
+            return phoneNumberValidation;
+        }
+
+        return { valid: true };
+    }
+
+    static validateAnnouncementTitle(title) {
+        if (!title) {
+            return { valid: false, message: "El título del anuncio no puede estar vacío." };
+        }
+
+        if (title.length < 6) {
+            return { valid: false, message: "El título debe tener al menos 6 caracteres." };
+        }
+
+        if (title.length > 50) {
+            return { valid: false, message: "El título debe tener menos de 50 caracteres." };
+        }
+
+        return { valid: true };
+    }
+
+    static validateAnnouncementDescription(description) {
+        if (!description) {
+            return { valid: false, message: "La descripción del anuncio no puede estar vacía." };
+        }
+
+        if (description.length < 10) {
+            return { valid: false, message: "La descripción debe tener al menos 10 caracteres." };
+        }
+
+        if (description.length > 300) {
+            return { valid: false, message: "La descripción debe tener menos de 300 caracteres." };
+        }
+
+        return { valid: true };
+    }
+
+    static validateAnnouncementPhoneNumber(phoneNumber, usePhoneNumber) {
+        if (!usePhoneNumber) {
+            return { valid: true }; // Si no se requiere el teléfono, no hay errores.
+        }
+
+        if (!phoneNumber) {
+            return { valid: false, message: "El número de teléfono no puede estar vacío." };
+        }
+
+        if (phoneNumber.length < 8) {
+            return { valid: false, message: "El número de teléfono debe tener al menos 8 caracteres." };
+        }
+
+        if (phoneNumber.length > 11) {
+            return { valid: false, message: "El número de teléfono debe tener entre 8 y 11 caracteres." };
+        }
+
+        return { valid: true };
+    }
+
+
     static validateEmail(email) {
         if (!email) {
             return { valid: false, message: "Ingresa tu e-mail." };

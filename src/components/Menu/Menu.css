@@ -16,9 +16,10 @@ body {
     gap: 30px;
     width: 100px;
     min-height: 100vh;
-    background-color: #2ead80;
+    background-color: white;
     align-items: baseline;
     font-size: 14px;
+    border-right: 1px solid #a2a2a2;
 }
 
 .right-content {
@@ -32,8 +33,6 @@ body {
     width: 100%;
     background-color: #2ead80;
     align-content: center;
-    border-bottom-right-radius: 25px;
-    border-bottom-left-radius: 25px;
     margin: 0px;
 }
 
@@ -41,11 +40,11 @@ body {
     padding-left: 30px;
     color: white;
     font-weight: 400;
-    font-size: 22px;
+    font-size: 24px ;
 }
 
 .section-button {
-    color: white;
+    color: #a2a2a2;
     display: flex;
     align-content: center;
     justify-content: center;
@@ -58,7 +57,7 @@ body {
 }
 
 .icon {
-    width: 25px;
-    height: 25px;
-    filter: invert(1) grayscale(1) brightness(100%);
+    width: 30px;
+    height: 30px;
+    filter: invert(77%) sepia(0%) saturate(8%) hue-rotate(197deg) brightness(85%) contrast(86%)
 }

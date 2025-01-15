@@ -7,6 +7,7 @@ import Loading from "./components/Loading/Loading.jsx";
 import { getDoc, doc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import db from './components/Database/Database';
+import Onboarding from "./components/Onboarding/Onboarding.jsx";
 
 class App extends React.Component {
   state = {
@@ -69,7 +70,7 @@ class App extends React.Component {
     const { user, userData } = this.state;
     return (
       <div className="main-container">
-        {user ? userData ? <Menu userData={userData} /> :  <Loading hideSignOut={false} /> : <Login />}
+        {user ? userData ? userData.neighbourhood ? <Onboarding userData={userData}/> : <Menu userData={userData} /> :  <Loading hideSignOut={false} /> : <Login />}
       </div>
     );
   }

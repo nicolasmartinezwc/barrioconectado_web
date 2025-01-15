@@ -1,0 +1,53 @@
+.onboarding-main-content {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    text-align: center;
+    justify-self: center;
+    justify-content: center;
+    height: 100vh;
+    width: 1000;
+}
+
+.onboarding-image {
+    width: 230px;
+    height: 200px;
+}
+
+.onboarding-main-wording {
+    line-height: 1.5;
+    font-size: 22px;
+    margin-bottom: 30px;
+    width: 600px;
+    font-weight: 300;
+}
+
+.onboarding-buttons-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: center;
+}
+
+.onboarding-buttons-container button {
+    font-size: 12px;
+    background-color: transparent;
+    border: 1px solid white;
+    border-radius: 6px;
+    height: 28px;
+    padding: 6px;
+    font-weight: 200;
+    color: white;
+    background-color: #49a0ff;
+    margin-bottom: 50px;
+    cursor: pointer;
+}
+
+.onboarding-logout-button {
+    font-size: 12px;
+    background-color: transparent;
+    border: none;
+    font-weight: 200;
+    color: #49a0ff;
+    cursor: pointer;
+}
