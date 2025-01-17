@@ -77,11 +77,13 @@ class ChooseNeighbourhood extends React.Component {
     };
 
     handleContinueButton = async () => {
-        const { selectedNeighbourhood } = this.state;
+        const { selectedNeighbourhood, selectedProvince } = this.state;
         if (!selectedNeighbourhood) {
             return;
         }
-        this.props.updateNeighbourhood(selectedNeighbourhood)
+        const provinceName = this.state.provinces.find(province => province.id === selectedProvince).nombre;
+        const newNeighbourhoodName = this.state.neighbourhoods.find(neighbourhood => neighbourhood.id === selectedNeighbourhood).nombre;
+        this.props.updateNeighbourhood(selectedNeighbourhood, newNeighbourhoodName, selectedProvince, provinceName);
     };
     
 

@@ -4,7 +4,7 @@ import { auth } from "./firebaseConfig";
 import Login from "./components/Login/Login.jsx";
 import Menu from "./components/Menu/Menu.jsx";
 import Loading from "./components/Loading/Loading.jsx";
-import { getDoc, doc, updateDoc } from "firebase/firestore";
+import { getDoc, doc, updateDoc, setDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import db from './components/Database/Database';
 import Onboarding from "./components/Onboarding/Onboarding.jsx";
@@ -33,7 +33,7 @@ class App extends React.Component {
     }
   }
 
-  updateNeighbourhood = async (newNeighbourhood) => {
+  updateNeighbourhood = async (newNeighbourhoodId, newNeighbourhoodName, provinceId, provinceName) => {
     const { user } = this.state;
   
     if (!user) {
@@ -45,14 +45,28 @@ class App extends React.Component {
     const userRef = doc(db, "users", userId);
   
     try {
-      await updateDoc(userRef, { neighbourhood: newNeighbourhood });
+      await updateDoc(userRef, { 
+        neighbourhood: newNeighbourhoodId,
+        province_id: provinceId
+       });
   
       this.setState((prevState) => ({
         userData: {
           ...prevState.userData,
-          neighbourhood: newNeighbourhood,
+          neighbourhood: newNeighbourhoodId,
+          province_id: provinceId
         },
       }));
+
+      const neighbourhoodRef = doc(db, "neighbourhoods", newNeighbourhoodId);
+
+      await setDoc(neighbourhoodRef, {
+            id: newNeighbourhoodId,
+            name: newNeighbourhoodName,
+            population: 0,
+            province: provinceName,
+            province_id: provinceId
+        });
   
     } catch (error) {
       console.error("Error updating neighbourhood:", error);

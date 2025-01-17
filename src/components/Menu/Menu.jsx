@@ -25,7 +25,7 @@ class Menu extends React.Component {
             currentSection: Sections.HOME,
             profilePictureDownloadURL: avatar,
             isPopupOpen: false,
-            loadingProfilePicture: true
+            loadingProfilePicture: false
         };
     }
 

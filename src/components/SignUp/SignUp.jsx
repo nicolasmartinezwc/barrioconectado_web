@@ -63,13 +63,18 @@ class SignUp extends React.Component {
         return validationResult.valid
     };
 
+    capitalizeFirstLetter = (str) => {
+        return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    };
+
     handleSignUpButton = async () => {
         this.setState({ errorMessage: '' });
         this.setState({ disableButton: true });
+        
         if (this.isSignUpValid()) {
             let result = await this.viewModel.createUserWithCredentials(
-                this.state.firstName,
-                this.state.lastName,
+                this.capitalizeFirstLetter(this.state.firstName),
+                this.capitalizeFirstLetter(this.state.lastName),
                 this.state.email,
                 this.state.password
             )
