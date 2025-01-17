@@ -16,7 +16,7 @@ class SignUpViewModel {
         await setDoc(userDocRef, {
             id: userId,
             email: email,
-            profile_picture: "",
+            picture_url: "",
             province_id: "",
             neighbourhood: "",
             last_name: lastName,

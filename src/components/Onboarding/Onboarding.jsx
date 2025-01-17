@@ -69,7 +69,7 @@ class Onboarding extends React.Component {
         const wording = this.getStepContent().wording;
 
         if (showChooseNeighbourhood) {
-            return <ChooseNeighbourhood/>;
+            return <ChooseNeighbourhood userData={this.props.userData} updateNeighbourhood={this.props.updateNeighbourhood}/>;
         }
 
         return (

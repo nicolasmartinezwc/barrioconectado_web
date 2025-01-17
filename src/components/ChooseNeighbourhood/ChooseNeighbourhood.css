@@ -1,7 +1,3 @@
-body {
-    
-}
-
 .choose-neighbourhood-main-content {
     display: flex;
     flex-direction: column;
@@ -11,4 +7,47 @@ body {
     justify-content: center;
     height: 100vh;
     width: 1000;
+}
+
+.choose-neighbourhood-card {
+    background-color: white;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    width: 500px;
+    margin-bottom: 50px;
+}
+
+.choose-neighbourhood-title {
+    font-size: 24px;
+}
+
+.choose-neighbourhood-section {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.choose-neighbourhood-section-input-container {
+    width: 94%;
+    padding: 15px;
+    margin: 0px;
+}
+
+.choose-neighbourhood-section-input-container p {
+    font-size: 12px;
+}
+
+.choose-neighbourhood-continue-button {
+    width: 30%;
+    height: 32px;
+    background-color: #2ead80;
+    border-radius: 6px;
+    border: none;
+    color: white;
+    font-size: 14px;
+    font-weight: 300;
+    margin-top: 20px;
+    cursor: pointer;
+    margin-bottom: 20px;
 }
