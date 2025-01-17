@@ -51,7 +51,7 @@ class Menu extends React.Component {
         this.setState({ loadingProfilePicture: newValue });
     }
 
-    downloadProfilePicture =    async () => {
+    downloadProfilePicture = async () => {
         const { userData } = this.props;
 
         if (userData && userData.picture_url) {
@@ -132,8 +132,8 @@ class Menu extends React.Component {
                     </div>
                     <div className="section-button" onClick={this.togglePopup}>
                         <div className="profile-picture-container">
-                            { loadingProfilePicture ? <div className="menu-spinner"></div> : <img className="profile-picture" src={profilePictureDownloadURL} alt="Perfil" />}
-                        
+                            {loadingProfilePicture ? <div className="menu-spinner"></div> : <img className="profile-picture" src={profilePictureDownloadURL} alt="Perfil" />}
+
                             {isPopupOpen && (
                                 <ProfilePopup
                                     userData={userData}

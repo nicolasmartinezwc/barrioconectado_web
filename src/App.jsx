@@ -136,7 +136,7 @@ class App extends React.Component {
     const { user, userData } = this.state;
     return (
       <div className="main-container">
-        {user ? userData ? userData.neighbourhood ? <Menu userData={userData} updatePictureUrl={this.updatePictureUrl} /> : <Onboarding userData={userData} updateNeighbourhood={this.updateNeighbourhood} /> :  <Loading hideSignOut={false} /> : <Login />}
+        {user ? userData ? userData.neighbourhood ? <Menu userData={userData} updatePictureUrl={this.updatePictureUrl} /> : <Onboarding userData={userData} updateNeighbourhood={this.updateNeighbourhood} /> :  <Loading hideSignOut={false} /> : <Login fetchUserData={this.fetchUserData}/>}
       </div>
     );
   }

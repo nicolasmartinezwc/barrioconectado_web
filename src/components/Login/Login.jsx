@@ -5,6 +5,10 @@ import googleLogo from '../../assets/google_logo.png';
 import SignUp from '../SignUp/SignUp.jsx';
 import LoginViewModel from "./LoginViewModel.js";
 import RecoverPassword from "../RecoverPassword/RecoverPassword.jsx";
+import { getAuth, signInWithPopup, GoogleAuthProvider, getAdditionalUserInfo } from "firebase/auth";
+import db from '../Database/Database';
+import { doc, setDoc } from "firebase/firestore";
+import { signOut } from "firebase/auth";
 
 class Login extends React.Component {
   constructor(props) {
@@ -23,6 +27,17 @@ class Login extends React.Component {
     this.viewModel = new LoginViewModel();
   }
 
+  handleLogout = () => {
+    const auth = getAuth();
+    signOut(auth)
+      .then(() => {
+        this.setState({ user: null });
+      })
+      .catch((error) => {
+        console.error("Error al cerrar sesión:", error);
+      });
+  }
+
   handleEmailChange = (event) => {
     this.setState({ email: event.target.value });
   };
@@ -35,9 +50,53 @@ class Login extends React.Component {
     this.setState({ showPassword: !this.state.showPassword });
   };
 
-  handleLoginWithGoogle = () => {
-    console.log('Login con Google');
+  handleLoginWithGoogle = async () => {
+    try {
+      this.setState({ errorMessage: '' });
+      const provider = new GoogleAuthProvider();
+      const auth = getAuth();
+      auth.languageCode = 'es';
+      const result = await signInWithPopup(auth, provider);
+      const additionalUserInfo = getAdditionalUserInfo(result);
+
+      if (additionalUserInfo.isNewUser) {
+        const email = additionalUserInfo.profile.email;
+        const firstName = additionalUserInfo.profile.given_name;
+        const id = result.user.uid
+        await this.createUserInDatabaseFromGoogle(id, firstName, email);
+      } else {
+        this.props.fetchUserData();
+      }
+    } catch (error) {
+      this.setState({ errorMessage: "Ocurrió un error." });
+      console.log(error);
+      this.handleLogout();
+    }
   };
+
+  createUserInDatabaseFromGoogle = async (id, firstName, email) => {
+    try {
+      const auth = getAuth();
+      if (!auth) {
+        throw new Error("Ocurrió un error al obtener la sesión");
+      }
+      const userDocRef = doc(db, "users", id);
+      await setDoc(userDocRef, {
+        id: id,
+        email: email,
+        picture_url: "",
+        province_id: "",
+        neighbourhood: "",
+        last_name: "",
+        first_name: firstName,
+        description: ""
+      });
+      this.props.fetchUserData();
+    } catch (error) {
+      this.handleLogout();
+      throw error;
+    }
+  }
 
   handleCreateAccountButton = () => {
     this.setState({ showSignUp: true });
