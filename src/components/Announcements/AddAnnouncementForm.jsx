@@ -71,7 +71,7 @@ class AddAnnouncementForm extends React.Component {
     createAnnouncement = async () => {
         const { title, description, selectedCategory, phoneNumber, usePhoneNumber } = this.state;
         try {
-            const auth = getAuth(); 
+            const auth = getAuth();
             const userId = auth.currentUser?.uid;
             const userData = this.props.userData;
             if (!userId || !userData) {
@@ -81,23 +81,22 @@ class AddAnnouncementForm extends React.Component {
             const currentTimeInterval = new Date().getTime() / 1000;
             const userDocRef = doc(db, "announcements", uuid);
             await setDoc(userDocRef, {
-               category: selectedCategory.toLowerCase(),
-               contact_phone: usePhoneNumber ? phoneNumber : '',
-               created_at: currentTimeInterval,
-               description: description,
-               id: uuid,
-               neighbourhood: userData.neighbourhood,
-               owner: userId,
-               owner_email: userData.email,
-               owner_name: userData.first_name + userData.last_name,
-               title: title,
+                category: selectedCategory.toLowerCase(),
+                contact_phone: usePhoneNumber ? phoneNumber : '',
+                created_at: currentTimeInterval,
+                description: description,
+                id: uuid,
+                neighbourhood: userData.neighbourhood,
+                owner: userId,
+                owner_email: userData.email,
+                owner_name: userData.first_name + userData.last_name,
+                title: title,
             });
             this.props.handleBackFromForm();
             this.props.fetchAnnouncements();
-            } catch (error) {
-                this.setState({ errorMessage: error.message });
-            }
-        
+        } catch (error) {
+            this.setState({ errorMessage: error.message });
+        }
     }
 
     currentCategoryIcon = () => {
@@ -145,7 +144,7 @@ class AddAnnouncementForm extends React.Component {
             <div className="add-announcement-form-container">
                 <p className="add-announcement-form-title">Crea un anuncio</p>
                 <p className="add-announcement-form-subtitle">En esta seccion podras anunciar un intercambio de artículos, donación o trabajo, ya sea que estes buscando u ofreciendo uno.</p>
-                <div className="add-announcement-form-sections-container" >
+                <div className="add-announcement-form-sections-container">
 
                     <div>
                         <p className="add-announcement-form-section-title">TÍTULO</p>

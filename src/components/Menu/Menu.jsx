@@ -51,7 +51,7 @@ class Menu extends React.Component {
         this.setState({ loadingProfilePicture: newValue });
     }
 
-    downloadProfilePicture = async () => {
+    downloadProfilePicture =    async () => {
         const { userData } = this.props;
 
         if (userData && userData.picture_url) {
