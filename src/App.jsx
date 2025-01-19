@@ -35,21 +35,21 @@ class App extends React.Component {
 
   updateNeighbourhood = async (newNeighbourhoodId, newNeighbourhoodName, provinceId, provinceName) => {
     const { user } = this.state;
-  
+
     if (!user) {
       console.error("User is not logged in.");
       return;
     }
-  
+
     const userId = user.uid;
     const userRef = doc(db, "users", userId);
-  
+
     try {
-      await updateDoc(userRef, { 
+      await updateDoc(userRef, {
         neighbourhood: newNeighbourhoodId,
         province_id: provinceId
-       });
-  
+      });
+
       this.setState((prevState) => ({
         userData: {
           ...prevState.userData,
@@ -61,39 +61,48 @@ class App extends React.Component {
       const neighbourhoodRef = doc(db, "neighbourhoods", newNeighbourhoodId);
 
       await setDoc(neighbourhoodRef, {
-            id: newNeighbourhoodId,
-            name: newNeighbourhoodName,
-            population: 0,
-            province: provinceName,
-            province_id: provinceId
-        });
-  
+        id: newNeighbourhoodId,
+        name: newNeighbourhoodName,
+        population: 0,
+        province: provinceName,
+        province_id: provinceId
+      });
+
     } catch (error) {
       console.error("Error updating neighbourhood:", error);
     }
   };
 
+  updateDescriptionState = (newDescription) => {
+    this.setState((prevState) => ({
+      userData: {
+        ...prevState.userData,
+        description: newDescription,
+      },
+    }));
+  };
+
   updatePictureUrl = async (newPictureUrl) => {
     const { user } = this.state;
-  
+
     if (!user) {
       console.error("User is not logged in.");
       return;
     }
-  
+
     const userId = user.uid;
     const userRef = doc(db, "users", userId);
-  
+
     try {
       await updateDoc(userRef, { picture_url: newPictureUrl });
-  
+
       this.setState((prevState) => ({
         userData: {
           ...prevState.userData,
           picture_url: newPictureUrl,
         },
       }));
-  
+
     } catch (error) {
       console.error("Error updating picture_url:", error);
     }
@@ -136,7 +145,7 @@ class App extends React.Component {
     const { user, userData } = this.state;
     return (
       <div className="main-container">
-        {user ? userData ? userData.neighbourhood ? <Menu userData={userData} updatePictureUrl={this.updatePictureUrl} /> : <Onboarding userData={userData} updateNeighbourhood={this.updateNeighbourhood} /> :  <Loading hideSignOut={false} /> : <Login fetchUserData={this.fetchUserData}/>}
+        {user ? userData ? userData.neighbourhood ? <Menu userData={userData} updatePictureUrl={this.updatePictureUrl} updateDescriptionState={this.updateDescriptionState} /> : <Onboarding userData={userData} updateNeighbourhood={this.updateNeighbourhood} /> : <Loading hideSignOut={false} /> : <Login fetchUserData={this.fetchUserData} />}
       </div>
     );
   }

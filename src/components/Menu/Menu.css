@@ -28,19 +28,29 @@ body {
 }
 
 .section-title {
+    display: flex;
+    flex-direction: row;
     text-align: left;
-    height: 70px;
     width: 100%;
     background-color: #2ead80;
-    align-content: center;
     margin: 0px;
+    align-items: center;
 }
 
 .section-title p {
-    padding-left: 30px;
     color: white;
     font-weight: 400;
-    font-size: 24px ;
+    font-size: 24px;
+}
+
+.home-profile-picture {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-left: 30px;
+    margin-right: 20px;
+    border: 2px solid #ddd;
 }
 
 .section-button {
@@ -92,6 +102,10 @@ body {
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid #ddd;
+}
+
+.section-title-p {
+    margin-left: 30px;
 }
 
 .profile-popup {

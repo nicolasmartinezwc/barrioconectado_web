@@ -105,13 +105,13 @@ class Menu extends React.Component {
         const renderContent = () => {
             switch (currentSection) {
                 case Sections.HOME:
-                    return <Home userData={userData} />;
+                    return <Home userData={userData} profilePictureDownloadURL={profilePictureDownloadURL} updateDescriptionState={this.props.updateDescriptionState} />;
                 case Sections.EVENTS:
                     return <Events userData={userData} />;
                 case Sections.ANNOUNCEMENTS:
                     return <Announcements userData={userData} />;
                 default:
-                    return <Home userData={userData} />;
+                    return <Home userData={userData} profilePictureDownloadURL={profilePictureDownloadURL} updateDescriptionState={this.props.updateDescriptionState} />;
             }
         };
 
@@ -123,11 +123,11 @@ class Menu extends React.Component {
                         <p>Inicio</p>
                     </div>
                     <div className="section-button" onClick={() => this.setSection(Sections.EVENTS)}>
-                        <img className="icon" src={person} alt="Inicio" />
+                        <img className="icon" src={person} alt="Eventos" />
                         <p>Eventos</p>
                     </div>
                     <div className="section-button" onClick={() => this.setSection(Sections.ANNOUNCEMENTS)}>
-                        <img className="icon" src={message} alt="Inicio" />
+                        <img className="icon" src={message} alt="Anuncios" />
                         <p>Anuncios</p>
                     </div>
                     <div className="section-button" onClick={this.togglePopup}>
@@ -147,9 +147,21 @@ class Menu extends React.Component {
                     </div>
                 </div>
                 <div className="right-content">
-                    <div className="section-title">
-                        <p>{currentSection}</p>
-                    </div>
+                    {
+                        currentSection === Sections.HOME ?
+                            <div className="section-title">
+                                <img className="home-profile-picture" src={profilePictureDownloadURL} alt="Perfil" />
+                                <p
+                                    style={{
+                                        fontSize: "30px"
+                                    }}
+                                >Hola, {userData.first_name + " " + userData.last_name ?? ""}</p>
+                            </div>
+                            :
+                            <div className="section-title">
+                                <p className="section-title-p">{currentSection}</p>
+                            </div>
+                    }
                     <div className="section-content">{renderContent()}</div>
                 </div>
 

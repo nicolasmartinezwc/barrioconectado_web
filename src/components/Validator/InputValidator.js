@@ -88,6 +88,78 @@ class InputValidator {
         return { valid: true };
     }
 
+    static validateHomeDescription(description) {
+        const homeDescriptionValidation = this.validateProfileDescription(description);
+        if (!homeDescriptionValidation.valid) {
+            return homeDescriptionValidation
+        }
+        return { valid: true };
+    }
+
+    static validatePost(post) {
+        const homePostValidation = this.validateHomePost(post);
+        if (!homePostValidation.valid) {
+            return homePostValidation
+        }
+        return { valid: true };
+    }
+
+    static validateComment(comment) {
+        const homeCommentValidation = this.validateHomeComment(comment);
+        if (!homeCommentValidation.valid    ) {
+            return homeCommentValidation
+        }
+        return { valid: true }
+    }
+
+    static validateHomeComment(comment) {
+        if (!comment) {
+            return { valid: false, message: "EL comentario no puede estar vacío." };
+        }
+
+        if (comment.length < 6) {
+            return { valid: false, message: "El comentario debe tener al menos 6 caracteres." };
+        }
+
+        if (comment.length > 300) {
+            return { valid: false, message: "El comentario no puede tener mas de 300 caracteres." };
+        }
+
+        return { valid: true };
+    }
+
+    static validateHomePost(post) {
+        if (!post) {
+            return { valid: false, message: "EL post no puede estar vacío." };
+        }
+
+        if (post.length < 6) {
+            return { valid: false, message: "El post debe tener al menos 6 caracteres." };
+        }
+
+        if (post.length > 300) {
+            return { valid: false, message: "El post no puede tener mas de 300 caracteres." };
+        }
+
+        return { valid: true };
+    }
+
+    static validateProfileDescription(description) {
+        if (!description) {
+            return { valid: false, message: "La descripción no puede estar vacía." };
+        }
+
+        if (description.length < 6) {
+            return { valid: false, message: "La descripción debe tener al menos 6 caracteres." };
+        }
+
+        if (description.length > 100) {
+            return { valid: false, message: "La descripción no puede tener mas de 100 caracteres." };
+        }
+
+        return { valid: true };
+    }
+
     static validateEventDate(day, month, year, allday, hour, minute) {
         if (!day || !month || !year) {
             return { valid: false, message: "Selecciona una fecha." };
