@@ -56,8 +56,6 @@ class HomePostComment extends React.Component {
                     <p className="home-comment-owner-text">
                         Escrito por {this.props.comment.owner_name} el {this.getDate()}
                     </p>
-
-                    FALTA EL LIKE
                 </div>
             </div>
         )

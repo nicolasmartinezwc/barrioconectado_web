@@ -20,7 +20,7 @@ class Home extends React.Component {
       showAddPostForm: false,
       neighbourhoodData: null,
       isLoadingNeighbourhoodData: false,
-      standaloneCard: null
+      standaloneCardId: null
     }
     this.viewModel = new HomeViewModel(this.props.userData);
   }
@@ -95,15 +95,17 @@ class Home extends React.Component {
   }
 
   handleCardClick = (post) => {
-    this.setState({ standaloneCard: post });
+    this.setState({ standaloneCardId: post.id });
   };
 
   handleBackFromStandaloneCard = () => {
-    this.setState({ standaloneCard: null });
+    this.setState({ standaloneCardId: null });
   }
 
   render() {
-    const { neighbourhoodData, isLoadingNeighbourhoodData, showAddPostForm, posts, isLoading, showError, errorMessage, description, editDescription, standaloneCard } = this.state;
+    const { neighbourhoodData, isLoadingNeighbourhoodData, showAddPostForm, posts, isLoading, showError, errorMessage, description, editDescription, standaloneCardId } = this.state;
+
+    const standaloneCard = posts.find(post => post.id === standaloneCardId)
 
     return (
       <div>
@@ -209,7 +211,7 @@ class Home extends React.Component {
               userData={this.props.userData}
             />
             :
-            <div>
+            <div className="test-container">
               {isLoading || isLoadingNeighbourhoodData ? (
                 <div className="loading-container">
                   <div className="spinner"></div>

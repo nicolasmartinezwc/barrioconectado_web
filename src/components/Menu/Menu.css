@@ -1,3 +1,66 @@
+@media screen and (max-width: 768px) {
+    .main-content {
+        flex-direction: column !important;
+        flex-direction: column-reverse !important;
+    }
+
+    .left-content {
+        flex-direction: row !important;
+        width: 100% !important;
+        height: 80px !important;
+        min-height: unset !important;
+        justify-content: space-around !important;
+        border-right: none !important;
+        border-top: 1px solid #a2a2a2 !important;
+        padding-left: 0px !important;
+        gap: 0px;
+        align-items: center !important;
+        padding-top: 10px;
+        position: fixed;
+        bottom: 0;
+        z-index: 1000;
+    }
+
+    .right-content {
+        margin-bottom: 120px !important;
+    }
+
+    .section-button {
+        margin-top: 0px !important;
+    }
+
+    .profile-picture-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #ddd;
+    }
+    
+    .section-button .profile-picture {
+        width: 44px;
+        height: 44px;
+    }
+
+    .profile-popup {
+        left: -430% !important;
+    }
+
+    .section-title {
+        flex-direction: row-reverse !important;
+        place-content: space-around;
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+
+    .section-title p {
+        font-size: 20px !important;
+    }
+}
+
 body {
     background-color: #f5f5f5;      
 }
@@ -5,8 +68,8 @@ body {
 .main-content {
     display: flex;
     flex-direction: row;
-    min-height: 100vh;
-    min-width: 100vh;
+    min-height: 100%;
+    min-width: 100%;
 }
 
 .left-content {
@@ -77,19 +140,6 @@ body {
     height: 50px;
     border-radius: 50%;
     object-fit: cover;
-}
-
-.profile-popup {
-    position: absolute;
-    background-color: white;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 4px;
-    padding: 10px 0;
-    z-index: 100;
-    min-width: 150px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
 }
 
 .profile-picture-container {

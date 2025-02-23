@@ -1,15 +1,43 @@
+@media screen and (max-width: 768px) {
+  .floating-button {
+    bottom: 100px !important;
+    height: 32px !important;
+    width: 30% !important;
+  }  
+
+  .announcements-container {
+    width: 100% !important;
+  }
+
+  .announcement-card {
+    width: 85% !important;
+  }
+
+  .add-announcement-input {
+    padding: 10px !important;
+    width: 90% !important;
+  }
+
+  .empty-content p {
+    width: 90% !important;
+    justify-self: center;
+  }
+}
+
 .announcements-container {
+  width: 80%;
   justify-self: center;
-  min-width: 80%;
 }
 
 .announcement-card {
   background-color: #d6db8f;
-  padding: 20px;
   border-radius: 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  width: 100%;
-  margin-top: 40px;
+  justify-self: center;
+  width: 90%;
+  padding: 20px;
+  margin-top: 25px;
+  margin-bottom: 25px;
 }
 
 .announcement-card-icon-container {
@@ -95,8 +123,7 @@
 
 .add-announcement-form-container {
   background-color: #f2f2f7;
-  min-height: 100vh;
-  min-width: 100vh;
+  
   display: flex;
   flex-direction: column;
   align-items: left;  
@@ -119,7 +146,6 @@
 }
 
 .add-announcement-form-section {
-  width: 95%;
   background-color: white;
   padding: 15px;
   border-radius: 8px;

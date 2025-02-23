@@ -1,3 +1,13 @@
+@media screen and (max-width: 768px) {
+  .add-event-form-section {
+    justify-self: center !important;
+  }
+
+  .add-event-input {
+    width: 90% !important;
+  }
+}
+
 .empty-content p {
     min-height: 100vh;
     font-size: 24px;
@@ -11,12 +21,14 @@
   }
   
   .event-card {
+    justify-self: center;
     background-color: white;
     padding: 20px;
     border-radius: 4px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    width: 100%;
-    margin-top: 40px;
+    width: 85%;
+    margin-top: 25px;
+    margin-bottom: 25px;
   }
   
   .event-card-title-section {
@@ -85,8 +97,6 @@
 }
 
 .add-event-form-container {
-  min-height: 100vh;
-  min-width: 100vh;
   display: flex;
   flex-direction: column;
   align-items: left;  
