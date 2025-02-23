@@ -7,7 +7,7 @@
     .left-content {
         flex-direction: row !important;
         width: 100% !important;
-        height: 80px !important;
+        height: 60px !important;
         min-height: unset !important;
         justify-content: space-around !important;
         border-right: none !important;
@@ -15,18 +15,24 @@
         padding-left: 0px !important;
         gap: 0px;
         align-items: center !important;
-        padding-top: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
         position: fixed;
         bottom: 0;
         z-index: 1000;
     }
 
     .right-content {
-        margin-bottom: 120px !important;
+        margin-bottom: 100px !important;
     }
 
     .section-button {
-        margin-top: 0px !important;
+        margin-top: 5px !important;
+    }
+
+    .section-button .icon {
+        width: 25px !important;
+        height: 25px !important;
     }
 
     .profile-picture-container {
@@ -38,6 +44,8 @@
         border-radius: 50%;
         object-fit: cover;
         border: 2px solid #ddd;
+        margin: 0px !important;
+        margin-bottom: 5px !important;
     }
     
     .section-button .profile-picture {
@@ -54,6 +62,12 @@
         place-content: space-around;
         padding-top: 15px;
         padding-bottom: 15px;
+    }
+
+    .section-button p {
+        margin: 0px !important;
+        margin-bottom: 5px !important;
+        font-size: 12px !important;
     }
 
     .section-title p {

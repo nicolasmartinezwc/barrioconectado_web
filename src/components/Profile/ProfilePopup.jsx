@@ -31,9 +31,9 @@ class ProfilePopup extends React.Component {
         }
 
         // Validar file size
-        const maxSize = 3 * 1024 * 1024;
+        const maxSize = 10 * 1024 * 1024;
         if (file.size > maxSize) {
-            alert("El tamaño de la imagen debe ser menor a 3 MB");
+            alert("El tamaño de la imagen debe ser menor a 10 MB");
             return;
         }
 
@@ -62,6 +62,7 @@ class ProfilePopup extends React.Component {
             await uploadBytes(newStorageRef, file);
              // Fill picture url in the database
             await this.props.updatePictureUrl(newFileName);
+
             this.props.downloadProfilePictureWithName(newFileName);
         } catch (error) {
             console.error("Error al subir la imagen:", error);

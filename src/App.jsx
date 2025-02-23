@@ -4,7 +4,7 @@ import { auth } from "./firebaseConfig";
 import Login from "./components/Login/Login.jsx";
 import Menu from "./components/Menu/Menu.jsx";
 import Loading from "./components/Loading/Loading.jsx";
-import { getDoc, doc, updateDoc, setDoc } from "firebase/firestore";
+import { getDoc, doc, updateDoc, setDoc, collection, query, where, getDocs } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import db from './components/Database/Database';
 import Onboarding from "./components/Onboarding/Onboarding.jsx";
@@ -95,6 +95,26 @@ class App extends React.Component {
 
     try {
       await updateDoc(userRef, { picture_url: newPictureUrl });
+
+      // Update the profile picture in each post
+      const postsRef = collection(db, "posts");
+      const postsQuery = query(postsRef, where("owner", "==", userId));
+      const postsSnapshot = await getDocs(postsQuery);
+
+      const postUpdates = postsSnapshot.docs.map((postDoc) =>
+          updateDoc(postDoc.ref, { owner_picture_url: newPictureUrl })
+      );
+      await Promise.all(postUpdates);
+
+       // Update the profile picture in each comment
+       const commentsRef = collection(db, "comments");
+       const commentsQuery = query(commentsRef, where("owner", "==", userId));
+       const commentsSnapshot = await getDocs(commentsQuery);
+
+       const commentUpdates = commentsSnapshot.docs.map((commentDoc) =>
+           updateDoc(commentDoc.ref, { owner_picture_url: newPictureUrl })
+       );
+       await Promise.all(commentUpdates);
 
       this.setState((prevState) => ({
         userData: {

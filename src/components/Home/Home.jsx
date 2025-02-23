@@ -211,7 +211,7 @@ class Home extends React.Component {
               userData={this.props.userData}
             />
             :
-            <div className="test-container">
+            <div>
               {isLoading || isLoadingNeighbourhoodData ? (
                 <div className="loading-container">
                   <div className="spinner"></div>

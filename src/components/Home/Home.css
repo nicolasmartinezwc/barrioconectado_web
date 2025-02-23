@@ -6,6 +6,7 @@
 
   .home-card {
     height: 110px !important;
+    margin-right: 0px !important;
   }
 
   .home-post-card {
@@ -24,18 +25,33 @@
     font-size: 14px !important;
   }
 
-  .home-container-latest-posts-text {
-    margin-bottom: 10px !important;
-    padding-top: 10px !important;
-  }
-
   .add-post-form-container {
     padding-top: 20px !important;
   }
 
+  .home-container-latest-posts-text {
+    margin-top: 20px !important;
+    margin-bottom: 20px !important;
+  }
+  
   .home-comment-row  .spinner {
     width: 30px !important;
     height: 30px !important;
+  }
+
+  .error-message-container {
+    bottom: 120px !important;
+    width: 70%;
+    text-align: center;
+ }
+
+  .home-header {
+    height: auto !important;
+    padding-bottom: 20px;
+  }
+
+  .home-container {
+    margin-top: 0px !important;
   }
 }
 

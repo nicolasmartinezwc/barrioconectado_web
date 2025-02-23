@@ -6,6 +6,14 @@
   .add-event-input {
     width: 90% !important;
   }
+
+  .event-card {
+    width: 80% !important;
+  }
+
+  .event-card-title-section {
+    font-weight: 500;
+  }
 }
 
 .empty-content p {
