@@ -7,14 +7,15 @@ import pencil from "../../assets/pencil_rectangle.png";
 import { doc, setDoc } from "firebase/firestore";
 import db from '../Database/Database';
 import HomePostComment from "./HomePostComment";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, query, where, updateDoc } from "firebase/firestore";
 import InputValidator from "../Validator/InputValidator";
+import avatar from '../../assets/avatar.png';
 
 class HomePostCard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            profilePictureURL: null,
+            profilePictureURL: avatar,
             liked: this.userLikesPhoto(),
             comments: [],
             errorMessage: '',
@@ -66,6 +67,10 @@ class HomePostCard extends React.Component {
     downloadProfilePicture = async () => {
         const userId = this.props.post.owner;
         const picture_url = this.props.post.owner_picture_url;
+        if (!picture_url || picture_url.length === 0) {
+            this.setState({ profilePictureURL: avatar });
+            return;
+        }
         try {
             const storage = getStorage();
             const profilePictureRef = ref(
@@ -76,7 +81,7 @@ class HomePostCard extends React.Component {
             this.setState({ profilePictureURL: url });
         } catch (error) {
             console.error("Error al descargar la imagen de perfil:", error);
-            this.setState({ profilePictureURL: null });
+            this.setState({ profilePictureURL: avatar });
         }
     };
 
@@ -165,13 +170,22 @@ class HomePostCard extends React.Component {
 
             const newCommentRef = doc(collection(db, "comments"), uuid);
             await setDoc(newCommentRef, commentData);
+
+            const newAmmountOfComments = post.amount_of_comments + 1;
+
+            const postRef = doc(db, "posts", post.id);
+            await updateDoc(postRef, {
+                amount_of_comments: newAmmountOfComments,
+            });
+
             this.props.updatePost({
                 ...post,
-                amount_of_comments: this.state.comments.length + 1,
+                amount_of_comments: newAmmountOfComments,
             });
             this.fetchComments();
         } catch (error) {
-            this.setState({ errorMessage: errorMessage });
+            print(error);
+            this.setState({ errorMessage: 'Ocurrió un error al publicar el comentario.' });
         }
     };
 
@@ -218,15 +232,11 @@ class HomePostCard extends React.Component {
             >
                 <p className="home-post-card-text">{post.text}</p>
                 <div className="home-post-card-row">
-                    {!imageUrl ? (
-                        <div className="spinner"></div>
-                    ) : (
-                        <img
-                            className="home-post-card-profile-picture"
-                            src={imageUrl}
-                            alt="Perfil"
-                        />
-                    )}
+                    <img
+                        className="home-post-card-profile-picture"
+                        src={imageUrl}
+                        alt="Perfil"
+                    />
                     <p className="home-post-card-owner-text">
                         Escrito por {post.owner_name} el {this.getDate()}
                     </p>

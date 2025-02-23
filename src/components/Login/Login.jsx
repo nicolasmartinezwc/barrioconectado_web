@@ -68,7 +68,6 @@ class Login extends React.Component {
         this.props.fetchUserData();
       }
     } catch (error) {
-      this.setState({ errorMessage: "Ocurrió un error." });
       console.log(error);
       this.handleLogout();
     }

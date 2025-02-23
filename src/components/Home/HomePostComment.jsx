@@ -1,11 +1,12 @@
 import React from "react";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import avatar from '../../assets/avatar.png';
 
 class HomePostComment extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            profilePictureURL: null
+            profilePictureURL: avatar
         }
     }
 
@@ -16,6 +17,10 @@ class HomePostComment extends React.Component {
     downloadProfilePicture = async () => {
         const userId = this.props.comment.owner;
         const picture_url = this.props.comment.owner_picture_url;
+        if (!picture_url || picture_url.length === 0) {
+            this.setState({ profilePictureURL: avatar });
+            return;
+        }
         try {
             const storage = getStorage();
             const profilePictureRef = ref(
@@ -26,7 +31,7 @@ class HomePostComment extends React.Component {
             this.setState({ profilePictureURL: url });
         } catch (error) {
             console.error("Error al descargar la imagen de perfil:", error);
-            this.setState({ profilePictureURL: null });
+            this.setState({ profilePictureURL: avatar });
         }
     };
 
@@ -44,15 +49,11 @@ class HomePostComment extends React.Component {
                     {this.props.comment.text}
                 </p>
                 <div className="home-comment-row">
-                    {!profilePictureURL ? (
-                        <div className="spinner"></div>
-                    ) : (
-                        <img
-                            className="home-comment-profile-picture"
-                            src={profilePictureURL}
-                            alt="Perfil"
-                        />
-                    )}
+                    <img
+                        className="home-comment-profile-picture"
+                        src={profilePictureURL}
+                        alt="Perfil"
+                    />
                     <p className="home-comment-owner-text">
                         Escrito por {this.props.comment.owner_name} el {this.getDate()}
                     </p>
